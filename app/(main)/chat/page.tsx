@@ -1,5 +1,6 @@
 import React from "react";
-import { Typography, Card, CardContent } from "@mui/material";
+import { Typography, Box } from "@mui/material";
+import ChatInterface from "@/components/chat/ChatInterface";
 
 export default function ChatPage() {
   return (
@@ -7,17 +8,9 @@ export default function ChatPage() {
       <Typography variant="h4" component="h1" gutterBottom>
         Chat
       </Typography>
-
-      <Card>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            Chat Interface
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Chat interface will be implemented in tasks 15-16.
-          </Typography>
-        </CardContent>
-      </Card>
+      <Box>
+        <ChatInterface />
+      </Box>
     </div>
   );
 }

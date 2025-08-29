@@ -23,6 +23,7 @@ import {
   Login as LoginIcon,
 } from "@mui/icons-material";
 import { ThemeToggle } from "@/components/ui";
+import { useAuth } from "@/components/providers";
 
 interface FormData {
   email: string;
@@ -37,6 +38,7 @@ interface FormErrors {
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useAuth();
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -58,12 +60,10 @@ export default function LoginPage() {
     return undefined;
   };
 
-  const validatePassword = (password: string): string | undefined => {
-    if (!password) {
+  const validatePassword = (_password: string): string | undefined => {
+    // Accept any non-empty password per requirement
+    if (!_password) {
       return "Password is required";
-    }
-    if (password.length < 6) {
-      return "Password must be at least 6 characters long";
     }
     return undefined;
   };
@@ -112,10 +112,8 @@ export default function LoginPage() {
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      // For demo purposes, accept any valid email/password combination
-      // In a real app, this would make an API call
-
-      // Redirect to dashboard
+      // Accept any credentials and persist login
+      login(formData.email);
       router.push("/dashboard");
     } catch (error) {
       setSubmitError("Login failed. Please try again.");

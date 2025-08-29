@@ -1,17 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Box,
-  Drawer,
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material";
-import { Menu as MenuIcon } from "@mui/icons-material";
+import { Box, Drawer, useTheme, useMediaQuery } from "@mui/material";
+import Header from "@/components/navigation/Header";
+import Sidebar from "@/components/navigation/Sidebar";
 
 const DRAWER_WIDTH = 240;
 
@@ -28,43 +20,9 @@ export default function MainLayout({
     setMobileOpen(!mobileOpen);
   };
 
-  // Sidebar placeholder content
-  const sidebarContent = (
-    <Box sx={{ p: 2 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Navigation
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-        Sidebar navigation will be implemented in task 5
-      </Typography>
-    </Box>
-  );
-
   return (
     <Box sx={{ display: "flex" }}>
-      {/* App Bar */}
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
-          ml: { md: `${DRAWER_WIDTH}px` },
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { md: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Dashboard
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <Header onMenuClick={handleDrawerToggle} />
 
       {/* Sidebar */}
       <Box
@@ -77,7 +35,7 @@ export default function MainLayout({
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", md: "none" },
@@ -87,7 +45,7 @@ export default function MainLayout({
             },
           }}
         >
-          {sidebarContent}
+          <Sidebar onNavigate={handleDrawerToggle} />
         </Drawer>
 
         {/* Desktop drawer */}
@@ -102,7 +60,7 @@ export default function MainLayout({
           }}
           open
         >
-          {sidebarContent}
+          <Sidebar />
         </Drawer>
       </Box>
 
@@ -115,7 +73,7 @@ export default function MainLayout({
           width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
         }}
       >
-        <Toolbar /> {/* Spacer for fixed AppBar */}
+        <Box sx={{ height: theme.mixins.toolbar.minHeight }} />
         {children}
       </Box>
     </Box>
