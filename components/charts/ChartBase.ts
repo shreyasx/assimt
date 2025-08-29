@@ -15,16 +15,26 @@ let registered = false;
 
 export function ensureChartSetup() {
   if (registered) return;
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    ArcElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-  registered = true;
+
+  try {
+    ChartJS.register(
+      CategoryScale,
+      LinearScale,
+      PointElement,
+      LineElement,
+      BarElement,
+      ArcElement,
+      Title,
+      Tooltip,
+      Legend
+    );
+    registered = true;
+  } catch (error) {
+    console.error("Failed to register Chart.js components:", error);
+  }
+}
+
+// Ensure registration happens immediately when this module is imported
+if (typeof window !== "undefined") {
+  ensureChartSetup();
 }

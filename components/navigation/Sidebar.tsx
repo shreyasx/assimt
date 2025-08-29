@@ -45,22 +45,17 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
         {items.map(item => {
           const selected = pathname?.startsWith(item.href);
           return (
-            <Link
+            <ListItemButton
               key={item.href}
+              component={Link}
               href={item.href}
               onClick={onNavigate}
-              passHref
-              legacyBehavior
+              selected={!!selected}
+              aria-current={selected ? "page" : undefined}
             >
-              <ListItemButton
-                component="a"
-                selected={!!selected}
-                aria-current={selected ? "page" : undefined}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.label} />
-              </ListItemButton>
-            </Link>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.label} />
+            </ListItemButton>
           );
         })}
       </List>
