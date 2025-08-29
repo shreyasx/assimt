@@ -18,7 +18,22 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "*.config.js",
+      "*.config.ts",
     ],
+  },
+  {
+    rules: {
+      // React/Next.js specific rules
+      "react/jsx-no-target-blank": "error",
+      "react/no-unescaped-entities": "error",
+      "react-hooks/exhaustive-deps": "warn",
+
+      // General code quality
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "prefer-const": "error",
+      "no-var": "error",
+    },
   },
 ];
 
