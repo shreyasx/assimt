@@ -38,16 +38,16 @@ export const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#1976d2", // Blue 700
-      light: "#42a5f5", // Blue 400
-      dark: "#1565c0", // Blue 800
+      main: "#4f46e5", // Indigo 600
+      light: "#6366f1", // Indigo 500
+      dark: "#4338ca", // Indigo 700
       contrastText: "#ffffff",
     },
     secondary: {
-      main: "#dc004e", // Pink A400
-      light: "#f06292", // Pink 300
-      dark: "#c2185b", // Pink 700
-      contrastText: "#ffffff",
+      main: "#0ea5e9", // Sky 500
+      light: "#38bdf8", // Sky 400
+      dark: "#0284c7", // Sky 600
+      contrastText: "#0b1220",
     },
     error: {
       main: "#d32f2f", // Red 700
@@ -70,15 +70,15 @@ export const theme = createTheme({
       dark: "#1b5e20", // Green 900
     },
     background: {
-      default: "#fafafa", // Grey 50
+      default: "#f7f7f9",
       paper: "#ffffff",
     },
     text: {
-      primary: "#212121", // Grey 900
-      secondary: "#757575", // Grey 600
-      disabled: "#bdbdbd", // Grey 400
+      primary: "#0f172a", // Slate 900
+      secondary: "#475569", // Slate 600
+      disabled: "#94a3b8", // Slate 400
     },
-    divider: "#e0e0e0", // Grey 300
+    divider: "#e6e8eb",
     action: {
       hover: "rgba(0, 0, 0, 0.04)",
       selected: "rgba(0, 0, 0, 0.08)",
@@ -89,19 +89,19 @@ export const theme = createTheme({
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
-      fontSize: "2.125rem",
+      fontSize: "2.25rem",
       fontWeight: 300,
-      lineHeight: 1.167,
-    },
-    h2: {
-      fontSize: "1.5rem",
-      fontWeight: 400,
       lineHeight: 1.2,
     },
+    h2: {
+      fontSize: "1.75rem",
+      fontWeight: 400,
+      lineHeight: 1.3,
+    },
     h3: {
-      fontSize: "1.25rem",
+      fontSize: "1.375rem",
       fontWeight: 500,
-      lineHeight: 1.167,
+      lineHeight: 1.25,
     },
     h4: {
       fontSize: "1.125rem",
@@ -141,13 +141,12 @@ export const theme = createTheme({
           fontWeight: 500,
           transition: `all ${designTokens.animation.duration.shortest}ms ${designTokens.animation.easing.easeInOut}`,
           minHeight: 36,
+          letterSpacing: 0.2,
         },
         contained: {
-          boxShadow:
-            "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+          boxShadow: "0 1px 2px rgba(10, 12, 15, 0.08)",
           "&:hover": {
-            boxShadow:
-              "0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12)",
+            boxShadow: "0 2px 6px rgba(10, 12, 15, 0.10)",
           },
         },
         outlined: {
@@ -163,12 +162,12 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: designTokens.borderRadius.md,
-          boxShadow:
-            "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+          boxShadow: "0 1px 2px rgba(10, 12, 15, 0.06)",
+          border: "1px solid",
+          borderColor: "divider",
           transition: `all ${designTokens.animation.duration.shortest}ms ${designTokens.animation.easing.easeInOut}`,
           "&:hover": {
-            boxShadow:
-              "0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12)",
+            boxShadow: "0 4px 12px rgba(10, 12, 15, 0.08)",
           },
         },
       },
@@ -178,10 +177,11 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: designTokens.borderRadius.sm,
+          border: "1px solid",
+          borderColor: "divider",
         },
         elevation1: {
-          boxShadow:
-            "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+          boxShadow: "0 1px 2px rgba(10, 12, 15, 0.08)",
         },
       },
     },
@@ -192,6 +192,7 @@ export const theme = createTheme({
           "& .MuiOutlinedInput-root": {
             borderRadius: designTokens.borderRadius.sm,
             transition: `border-color ${designTokens.animation.duration.shorter}ms ${designTokens.animation.easing.easeInOut}`,
+            backgroundColor: "background.paper",
           },
         },
       },
@@ -208,8 +209,7 @@ export const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          boxShadow:
-            "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+          boxShadow: "0 1px 0 rgba(10, 12, 15, 0.06)",
         },
       },
     },
@@ -218,6 +218,14 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: designTokens.borderRadius.lg,
+        },
+      },
+    },
+    // Table Head - subtle background
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#f3f4f6",
         },
       },
     },
@@ -239,16 +247,16 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#90caf9", // Blue 300
-      light: "#e3f2fd", // Blue 50
-      dark: "#42a5f5", // Blue 400
-      contrastText: "#000000",
+      main: "#8b9cf5", // Indigo-ish 300
+      light: "#a5b4fc", // Indigo 200
+      dark: "#6366f1", // Indigo 500
+      contrastText: "#0b1220",
     },
     secondary: {
-      main: "#f48fb1", // Pink 200
-      light: "#fce4ec", // Pink 50
-      dark: "#ec407a", // Pink 400
-      contrastText: "#000000",
+      main: "#67e8f9", // Sky 200
+      light: "#a5f3fc",
+      dark: "#22d3ee",
+      contrastText: "#0b1220",
     },
     error: {
       main: "#f44336", // Red 500
@@ -271,15 +279,15 @@ export const darkTheme = createTheme({
       dark: "#388e3c", // Green 700
     },
     background: {
-      default: "#121212",
-      paper: "#1e1e1e",
+      default: "#0b0d10",
+      paper: "#111318",
     },
     text: {
-      primary: "#ffffff",
-      secondary: "#b0b0b0",
-      disabled: "#666666",
+      primary: "#e5e7eb",
+      secondary: "#9ca3af",
+      disabled: "#6b7280",
     },
-    divider: "#333333",
+    divider: "#1f242b",
     action: {
       hover: "rgba(255, 255, 255, 0.08)",
       selected: "rgba(255, 255, 255, 0.12)",

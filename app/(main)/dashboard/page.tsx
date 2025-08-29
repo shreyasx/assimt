@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Typography, Grid, Box } from "@mui/material";
+import { Grid, Box } from "@mui/material";
+import { PageHeader, PageContainer, SectionCard } from "@/components/ui";
 import StatsCard from "@/components/dashboard/StatsCard";
 import { People, PersonOutline, ShoppingCart } from "@mui/icons-material";
 import { SWRProvider } from "@/components/providers";
@@ -35,8 +36,10 @@ function DashboardContent() {
       );
     }
     data = [...data].sort((a: User, b: User) => {
-      const av = String((a as any)[orderBy] ?? "").toLowerCase();
-      const bv = String((b as any)[orderBy] ?? "").toLowerCase();
+      const aValue = (a as unknown as Record<string, unknown>)[orderBy];
+      const bValue = (b as unknown as Record<string, unknown>)[orderBy];
+      const av = String(aValue ?? "").toLowerCase();
+      const bv = String(bValue ?? "").toLowerCase();
       if (av < bv) return order === "asc" ? -1 : 1;
       if (av > bv) return order === "asc" ? 1 : -1;
       return 0;
@@ -62,10 +65,11 @@ function DashboardContent() {
   ];
 
   return (
-    <div>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Dashboard
-      </Typography>
+    <PageContainer>
+      <PageHeader
+        title="Dashboard"
+        subtitle="Overview of your product metrics"
+      />
       <Grid container spacing={3}>
         <Grid item xs={12} md={4}>
           <StatsCard
@@ -94,34 +98,36 @@ function DashboardContent() {
       </Grid>
 
       <Box mt={4}>
-        <Box mb={2}>
-          <SearchInput placeholder="Search users..." onSearch={setQuery} />
-        </Box>
-        <DataTable<User>
-          columns={columns}
-          rows={paged}
-          total={filtered.length}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          onPageChange={setPage}
-          onRowsPerPageChange={size => {
-            setRowsPerPage(size);
-            setPage(0);
-          }}
-          orderBy={orderBy}
-          order={order}
-          onSort={key => {
-            if (orderBy === key) {
-              setOrder(prev => (prev === "asc" ? "desc" : "asc"));
-            } else {
-              setOrder("asc");
-              setOrderBy(key);
-            }
-          }}
-          emptyMessage={isLoading ? "Loading users..." : "No users found"}
-        />
+        <SectionCard title="Users">
+          <Box mb={2}>
+            <SearchInput placeholder="Search users..." onSearch={setQuery} />
+          </Box>
+          <DataTable<User>
+            columns={columns}
+            rows={paged}
+            total={filtered.length}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            onPageChange={setPage}
+            onRowsPerPageChange={size => {
+              setRowsPerPage(size);
+              setPage(0);
+            }}
+            orderBy={orderBy}
+            order={order}
+            onSort={key => {
+              if (orderBy === key) {
+                setOrder(prev => (prev === "asc" ? "desc" : "asc"));
+              } else {
+                setOrder("asc");
+                setOrderBy(key);
+              }
+            }}
+            emptyMessage={isLoading ? "Loading users..." : "No users found"}
+          />
+        </SectionCard>
       </Box>
-    </div>
+    </PageContainer>
   );
 }
 

@@ -15,7 +15,10 @@ export function StatsCard({
   loading?: boolean;
 }) {
   return (
-    <Card>
+    <Card
+      elevation={0}
+      sx={{ border: "1px solid", borderColor: "divider", borderRadius: 2 }}
+    >
       <CardContent>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box>

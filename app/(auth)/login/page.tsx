@@ -115,7 +115,7 @@ export default function LoginPage() {
       // Accept any credentials and persist login
       login(formData.email);
       router.push("/dashboard");
-    } catch (error) {
+    } catch {
       setSubmitError("Login failed. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -132,8 +132,11 @@ export default function LoginPage() {
         <ThemeToggle />
       </Box>
 
-      <Card elevation={2} sx={{ borderRadius: 2 }}>
-        <CardContent sx={{ p: 4 }}>
+      <Card
+        elevation={0}
+        sx={{ borderRadius: 3, border: "1px solid", borderColor: "divider" }}
+      >
+        <CardContent sx={{ p: { xs: 3, sm: 5 } }}>
           <Box textAlign="center" mb={3}>
             <Typography variant="h4" component="h1" gutterBottom>
               Welcome Back

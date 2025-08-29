@@ -3,8 +3,18 @@
 import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { ensureChartSetup } from "./ChartBase";
+import type { ChartData, ChartOptions } from "chart.js";
 
-export function PieChart({ data, options }: { data: any; options?: any }) {
+type PieChartData = ChartData<"pie">;
+type PieChartOptions = ChartOptions<"pie">;
+
+export function PieChart({
+  data,
+  options,
+}: {
+  data: PieChartData;
+  options?: PieChartOptions;
+}) {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {

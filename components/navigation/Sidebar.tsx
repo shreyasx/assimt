@@ -38,7 +38,16 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   );
 
   return (
-    <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+    <Box
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        bgcolor: "background.paper",
+        borderRight: "1px solid",
+        borderColor: "divider",
+      }}
+    >
       <Toolbar />
       <Divider />
       <List sx={{ flex: 1 }}>
@@ -52,6 +61,16 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
               onClick={onNavigate}
               selected={!!selected}
               aria-current={selected ? "page" : undefined}
+              sx={{
+                borderRadius: 1,
+                mx: 1,
+                my: 0.5,
+                "&.Mui-selected": {
+                  bgcolor: "primary.main",
+                  color: "primary.contrastText",
+                  "& .MuiListItemIcon-root": { color: "primary.contrastText" },
+                },
+              }}
             >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.label} />

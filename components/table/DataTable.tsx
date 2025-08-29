@@ -53,7 +53,10 @@ export function DataTable<T extends Record<string, unknown>>({
   emptyMessage = "No data",
 }: DataTableProps<T>) {
   return (
-    <Paper>
+    <Paper
+      elevation={0}
+      sx={{ border: "1px solid", borderColor: "divider", borderRadius: 2 }}
+    >
       <TableContainer>
         <Table size="medium" stickyHeader aria-label="data table">
           <TableHead>
@@ -62,7 +65,11 @@ export function DataTable<T extends Record<string, unknown>>({
                 const isSortable = !!col.sortable && !!onSort;
                 const active = isSortable && orderBy === col.key;
                 return (
-                  <TableCell key={String(col.key)} align={col.align ?? "left"}>
+                  <TableCell
+                    key={String(col.key)}
+                    align={col.align ?? "left"}
+                    sx={{ bgcolor: "#f9fafb" }}
+                  >
                     {isSortable ? (
                       <TableSortLabel
                         active={!!active}
@@ -92,7 +99,11 @@ export function DataTable<T extends Record<string, unknown>>({
               </TableRow>
             ) : (
               rows.map((row, idx) => (
-                <TableRow hover key={idx}>
+                <TableRow
+                  hover
+                  key={idx}
+                  sx={{ "&:hover": { bgcolor: "action.hover" } }}
+                >
                   {columns.map(col => (
                     <TableCell
                       key={String(col.key)}

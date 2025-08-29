@@ -1,16 +1,15 @@
 import React from "react";
-import { Typography, Box } from "@mui/material";
+// Removed unused imports
+import { PageHeader, PageContainer, SectionCard } from "@/components/ui";
 import ChatInterface from "@/components/chat/ChatInterface";
 
 export default function ChatPage() {
   return (
-    <div>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Chat
-      </Typography>
-      <Box>
+    <PageContainer>
+      <PageHeader title="Chat" subtitle="Converse with your assistant" />
+      <SectionCard>
         <ChatInterface />
-      </Box>
-    </div>
+      </SectionCard>
+    </PageContainer>
   );
 }

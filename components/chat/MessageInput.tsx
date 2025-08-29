@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Box, TextField, IconButton, Paper } from "@mui/material";
+import { TextField, IconButton, Paper } from "@mui/material";
 import { Send as SendIcon } from "@mui/icons-material";
 
 export function MessageInput({

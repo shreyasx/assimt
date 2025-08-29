@@ -10,8 +10,17 @@ export function Header({ onMenuClick }: { onMenuClick: () => void }) {
   const { userEmail } = useAuth();
 
   return (
-    <AppBar position="fixed" sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}>
-      <Toolbar>
+    <AppBar
+      position="fixed"
+      color="inherit"
+      sx={{
+        zIndex: theme => theme.zIndex.drawer + 1,
+        bgcolor: "background.paper",
+        borderBottom: "1px solid",
+        borderColor: "divider",
+      }}
+    >
+      <Toolbar sx={{ minHeight: 64 }}>
         <IconButton
           color="inherit"
           edge="start"

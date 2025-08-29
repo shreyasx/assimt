@@ -34,6 +34,11 @@ export function SearchInput({
           </InputAdornment>
         ),
       }}
+      sx={{
+        "& .MuiOutlinedInput-root": {
+          bgcolor: "background.paper",
+        },
+      }}
     />
   );
 }

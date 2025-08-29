@@ -3,8 +3,18 @@
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { ensureChartSetup } from "./ChartBase";
+import type { ChartData, ChartOptions } from "chart.js";
 
-export function BarChart({ data, options }: { data: any; options?: any }) {
+type BarChartData = ChartData<"bar">;
+type BarChartOptions = ChartOptions<"bar">;
+
+export function BarChart({
+  data,
+  options,
+}: {
+  data: BarChartData;
+  options?: BarChartOptions;
+}) {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {

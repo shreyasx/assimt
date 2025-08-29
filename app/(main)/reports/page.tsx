@@ -1,16 +1,8 @@
 "use client";
 
 import React from "react";
-import {
-  Typography,
-  Box,
-  Tabs,
-  Tab,
-  Grid,
-  Card,
-  CardContent,
-  TextField,
-} from "@mui/material";
+import { Box, Tabs, Tab, Grid, TextField } from "@mui/material";
+import { PageHeader, PageContainer, SectionCard } from "@/components/ui";
 import { LineChart } from "@/components/charts/LineChart";
 import { BarChart } from "@/components/charts/BarChart";
 
@@ -49,61 +41,53 @@ export default function ReportsPage() {
   };
 
   return (
-    <div>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Reports
-      </Typography>
+    <PageContainer>
+      <PageHeader
+        title="Reports"
+        subtitle="Explore your trends and analytics"
+      />
 
-      <Box mb={2} display="flex" gap={2} alignItems="center" flexWrap="wrap">
-        <TextField
-          type="date"
-          label="From"
-          value={from}
-          onChange={e => setFrom(e.target.value)}
-          InputLabelProps={{ shrink: true }}
-        />
-        <TextField
-          type="date"
-          label="To"
-          value={to}
-          onChange={e => setTo(e.target.value)}
-          InputLabelProps={{ shrink: true }}
-        />
-      </Box>
+      <SectionCard title="Filters">
+        <Box mb={2} display="flex" gap={2} alignItems="center" flexWrap="wrap">
+          <TextField
+            type="date"
+            label="From"
+            value={from}
+            onChange={e => setFrom(e.target.value)}
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
+            type="date"
+            label="To"
+            value={to}
+            onChange={e => setTo(e.target.value)}
+            InputLabelProps={{ shrink: true }}
+          />
+        </Box>
+        <Tabs
+          value={tab}
+          onChange={(_e, v) => setTab(v)}
+          sx={{ mb: 2 }}
+          aria-label="Report view tabs"
+        >
+          <Tab label="Daily" />
+          <Tab label="Weekly" />
+          <Tab label="Monthly" />
+        </Tabs>
+      </SectionCard>
 
-      <Tabs
-        value={tab}
-        onChange={(_e, v) => setTab(v)}
-        sx={{ mb: 2 }}
-        aria-label="Report view tabs"
-      >
-        <Tab label="Daily" />
-        <Tab label="Weekly" />
-        <Tab label="Monthly" />
-      </Tabs>
-
-      <Grid container spacing={3}>
+      <Grid container spacing={3} sx={{ mt: 1 }}>
         <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Trend (Line)
-              </Typography>
-              <LineChart data={lineData} />
-            </CardContent>
-          </Card>
+          <SectionCard title="Trend (Line)">
+            <LineChart data={lineData} />
+          </SectionCard>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Trend (Bar)
-              </Typography>
-              <BarChart data={barData} />
-            </CardContent>
-          </Card>
+          <SectionCard title="Trend (Bar)">
+            <BarChart data={barData} />
+          </SectionCard>
         </Grid>
       </Grid>
-    </div>
+    </PageContainer>
   );
 }
