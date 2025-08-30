@@ -1,15 +1,15 @@
 "use client";
 
 import React from "react";
-import { Grid, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { PageHeader, PageContainer, SectionCard } from "@/components/ui";
 import StatsCard from "@/components/dashboard/StatsCard";
 import { People, PersonOutline, ShoppingCart } from "@mui/icons-material";
 import { SWRProvider } from "@/components/providers";
 import { useUsers } from "@/hooks";
 import SearchInput from "@/components/table/SearchInput";
-import DataTable, { type Column } from "@/components/table/DataTable";
-import { type User } from "@/types";
+import DataTable from "@/components/table/DataTable";
+import Grid from "@mui/material/Grid";
 
 function DashboardContent() {
   const { users, isLoading } = useUsers();
@@ -18,10 +18,10 @@ function DashboardContent() {
   const totalOrders = totalUsers * 3;
 
   const [query, setQuery] = React.useState("");
-  const [orderBy, setOrderBy] = React.useState<string>("name");
-  const [order, setOrder] = React.useState<"asc" | "desc">("asc");
+  const [orderBy, setOrderBy] = React.useState("name");
+  const [order, setOrder] = React.useState("asc");
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(4);
 
   const filtered = React.useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -35,9 +35,9 @@ function DashboardContent() {
         )
       );
     }
-    data = [...data].sort((a: User, b: User) => {
-      const aValue = (a as unknown as Record<string, unknown>)[orderBy];
-      const bValue = (b as unknown as Record<string, unknown>)[orderBy];
+    data = [...data].sort((a, b) => {
+      const aValue = (a || {})[orderBy];
+      const bValue = (b || {})[orderBy];
       const av = String(aValue ?? "").toLowerCase();
       const bv = String(bValue ?? "").toLowerCase();
       if (av < bv) return order === "asc" ? -1 : 1;
@@ -52,26 +52,16 @@ function DashboardContent() {
     return filtered.slice(start, start + rowsPerPage);
   }, [filtered, page, rowsPerPage]);
 
-  const columns: Column<User>[] = [
+  const columns = [
     { key: "name", label: "Name", sortable: true },
     { key: "email", label: "Email", sortable: true },
-    { key: "phone", label: "Phone" },
-    {
-      key: "company",
-      label: "Company",
-      sortable: true,
-      render: u => u.company?.name,
-    },
   ];
 
   return (
     <PageContainer>
-      <PageHeader
-        title="Dashboard"
-        subtitle="Overview of your product metrics"
-      />
+      <PageHeader title="Dashboard" />
       <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} sm={4}>
           <StatsCard
             title="Total Users"
             value={totalUsers}
@@ -79,7 +69,7 @@ function DashboardContent() {
             icon={<People fontSize="large" />}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} sm={4}>
           <StatsCard
             title="Active Users"
             value={activeUsers}
@@ -87,7 +77,7 @@ function DashboardContent() {
             icon={<PersonOutline fontSize="large" />}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} sm={4}>
           <StatsCard
             title="Total Orders"
             value={totalOrders}
@@ -102,7 +92,7 @@ function DashboardContent() {
           <Box mb={2}>
             <SearchInput placeholder="Search users..." onSearch={setQuery} />
           </Box>
-          <DataTable<User>
+          <DataTable
             columns={columns}
             rows={paged}
             total={filtered.length}

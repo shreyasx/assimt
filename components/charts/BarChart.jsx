@@ -3,18 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { ensureChartSetup } from "./ChartBase";
-import type { ChartData, ChartOptions } from "chart.js";
 
-type BarChartData = ChartData<"bar">;
-type BarChartOptions = ChartOptions<"bar">;
-
-export function BarChart({
-  data,
-  options,
-}: {
-  data: BarChartData;
-  options?: BarChartOptions;
-}) {
+export function BarChart({ data, options }) {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -26,7 +16,20 @@ export function BarChart({
     return <div>Loading chart...</div>;
   }
 
-  return <Bar data={data} options={options} />;
+  return (
+    <Bar
+      data={data}
+      options={{
+        responsive: true,
+        maintainAspectRatio: false, // 🔑 allow parent to control size
+        plugins: {
+          legend: { display: true, position: "top" },
+          tooltip: { enabled: true },
+        },
+        ...options,
+      }}
+    />
+  );
 }
 
 export default BarChart;

@@ -3,18 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { ensureChartSetup } from "./ChartBase";
-import type { ChartData, ChartOptions } from "chart.js";
 
-type LineChartData = ChartData<"line">;
-type LineChartOptions = ChartOptions<"line">;
-
-export function LineChart({
-  data,
-  options,
-}: {
-  data: LineChartData;
-  options?: LineChartOptions;
-}) {
+export function LineChart({ data, options }) {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -26,7 +16,20 @@ export function LineChart({
     return <div>Loading chart...</div>;
   }
 
-  return <Line data={data} options={options} />;
+  return (
+    <Line
+      data={data}
+      options={{
+        responsive: true,
+        maintainAspectRatio: false, // 🔑 allow parent height to control size
+        plugins: {
+          legend: { display: true, position: "top" },
+          tooltip: { enabled: true },
+        },
+        ...options,
+      }}
+    />
+  );
 }
 
 export default LineChart;

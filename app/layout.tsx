@@ -11,7 +11,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Next MUI Dashboard",
+  title: "Dashboard",
   description:
     "A modern, responsive dashboard built with Next.js, Material UI, and Tailwind CSS",
   keywords: ["dashboard", "nextjs", "material-ui", "tailwind", "typescript"],
