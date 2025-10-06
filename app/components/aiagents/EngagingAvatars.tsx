@@ -1,17 +1,68 @@
 "use client";
-/** @jsxImportSource @emotion/react */
 import { Box, Typography, Container } from "@mui/material";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function EngagingAvatars() {
 	const flags = [
-		{ src: "/flags/flag-1.png", width: 128.2, height: 85.5 },
-		{ src: "/flags/flag-2.png", width: 137.2, height: 86.3 },
-		{ src: "/flags/flag-3.png", width: 132.7, height: 86.3 },
-		{ src: "/flags/flag-4.png", width: 129, height: 86.3 },
-		{ src: "/flags/flag-5.png", width: 138, height: 86.3 },
-		{ src: "/flags/flag-6.png", width: 129, height: 86.3 },
-		{ src: "/flags/flag-7.png", width: 132, height: 79.5 },
+		{ src: "/flags/flag-1.png", name: "Flag 1", width: 128.2, height: 85.5 },
+		{ src: "/flags/flag-2.png", name: "Flag 2", width: 137.2, height: 86.3 },
+		{ src: "/flags/flag-3.png", name: "Flag 3", width: 132.7, height: 86.3 },
+		{ src: "/flags/flag-4.png", name: "Flag 4", width: 129, height: 86.3 },
+		{ src: "/flags/flag-5.png", name: "Flag 5", width: 138, height: 86.3 },
+		{ src: "/flags/flag-6.png", name: "Flag 6", width: 129, height: 86.3 },
+		{ src: "/flags/flag-7.png", name: "Flag 7", width: 132, height: 79.5 },
+		// Duplicate for seamless infinite scroll
+		{ src: "/flags/flag-1.png", name: "Flag 1", width: 128.2, height: 85.5 },
+		{ src: "/flags/flag-2.png", name: "Flag 2", width: 137.2, height: 86.3 },
+		{ src: "/flags/flag-3.png", name: "Flag 3", width: 132.7, height: 86.3 },
 	];
+
+	const settings = {
+		dots: false,
+		infinite: true,
+		speed: 600,
+		slidesToShow: 7,
+		slidesToScroll: 1,
+		centerMode: true,
+		centerPadding: "0px",
+		focusOnSelect: true,
+		arrows: false,
+		draggable: true,
+		swipe: true,
+		touchMove: true,
+		swipeToSlide: true,
+		autoplay: true,
+		autoplaySpeed: 2500,
+		cssEase: "cubic-bezier(0.4, 0, 0.2, 1)",
+		pauseOnHover: true,
+		responsive: [
+			{
+				breakpoint: 1280,
+				settings: {
+					slidesToShow: 5,
+					centerMode: true,
+				},
+			},
+			{
+				breakpoint: 960,
+				settings: {
+					slidesToShow: 3,
+					centerMode: true,
+					centerPadding: "40px",
+				},
+			},
+			{
+				breakpoint: 600,
+				settings: {
+					slidesToShow: 1,
+					centerMode: true,
+					centerPadding: "80px",
+				},
+			},
+		],
+	};
 
 	return (
 		<Box
@@ -31,6 +82,49 @@ export default function EngagingAvatars() {
 				overflow: "hidden",
 			}}
 		>
+			{/* Custom CSS for flags carousel */}
+			<style>{`
+				.flags-carousel .slick-slide {
+					transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+											opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+											filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+					opacity: 0.5;
+					transform: scale(0.75) translateY(20px);
+					filter: grayscale(40%) brightness(0.8);
+				}
+				.flags-carousel .slick-center {
+					transform: scale(1.15) translateY(0) !important;
+					opacity: 1 !important;
+					z-index: 10 !important;
+					filter: grayscale(0%) brightness(1.1) !important;
+				}
+				.flags-carousel .slick-list {
+					padding: 60px 0 !important;
+					margin: 0;
+					overflow: visible !important;
+				}
+				.flags-carousel .slick-track {
+					display: flex !important;
+					align-items: center !important;
+				}
+				.flags-carousel .slick-slide > div {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+				.flag-container {
+					transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+					transform-origin: center center;
+					cursor: grab;
+				}
+				.flag-container:active {
+					cursor: grabbing;
+				}
+				.flags-carousel .slick-center .flag-container {
+					filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+				}
+			`}</style>
+
 			{/* Text Content - positioned lower on the page */}
 			<Container
 				maxWidth="lg"
@@ -68,7 +162,7 @@ export default function EngagingAvatars() {
 				</Typography>
 			</Container>
 
-			{/* Flags Strip (constrained inside container) */}
+			{/* Flags Carousel */}
 			<Container
 				maxWidth="lg"
 				sx={{
@@ -77,49 +171,65 @@ export default function EngagingAvatars() {
 					mb: { xs: 2, md: 4 },
 				}}
 			>
-				<Box
+				<Box className="flags-carousel">
+					<Slider {...settings}>
+						{flags.map((flag, index) => (
+							<Box
+								key={index}
+								sx={{
+									px: 1,
+									display: "flex !important",
+									justifyContent: "center",
+									alignItems: "center",
+								}}
+							>
+								<Box
+									className="flag-container"
+									sx={{
+										display: "flex",
+										flexDirection: "column",
+										alignItems: "center",
+										justifyContent: "center",
+										p: 2,
+									}}
+								>
+									<Box
+										component="img"
+										src={flag.src}
+										alt={flag.name}
+										sx={{
+											width: {
+												xs: "80px",
+												sm: "100px",
+												md: "130px",
+											},
+											height: "auto",
+											objectFit: "contain",
+											display: "block",
+											borderRadius: "8px",
+											transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+										}}
+									/>
+								</Box>
+							</Box>
+						))}
+					</Slider>
+				</Box>
+
+				{/* Scroll instructions */}
+				<Typography
+					variant="body2"
 					sx={{
-						display: "flex",
-						alignItems: "flex-end",
-						justifyContent: "center",
-						gap: 0,
-						flexWrap: { xs: "wrap", md: "nowrap" },
-						maxWidth: "100%",
-						px: { xs: 2, md: 4 },
+						mt: 4,
+						textAlign: "center",
+						opacity: 0.7,
+						color: "#1a2332",
+						fontSize: "0.9rem",
+						fontWeight: 400,
 					}}
 				>
-					{flags.map((flag, index) => (
-						<Box
-							key={index}
-							sx={{
-								position: "relative",
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-							}}
-						>
-							<Box
-								component="img"
-								src={flag.src}
-								alt={`Flag ${index + 1}`}
-								sx={{
-									width: {
-										xs: `${flag.width * 0.6}px`,
-										sm: `${flag.width * 0.8}px`,
-										md: `${flag.width}px`,
-									},
-									height: {
-										xs: `${flag.height * 0.6}px`,
-										sm: `${flag.height * 0.8}px`,
-										md: `${flag.height}px`,
-									},
-									objectFit: "cover",
-									display: "block",
-								}}
-							/>
-						</Box>
-					))}
-				</Box>
+					Drag to explore languages • Auto-plays every 2.5 seconds
+				</Typography>
 			</Container>
 		</Box>
 	);
